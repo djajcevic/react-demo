@@ -5,7 +5,8 @@ import {Component} from "react";
 class App extends Component {
   state = {
     backend: {
-      status: "Not Available"
+      status: "Not Available",
+      components: []
     }
   };
 
@@ -23,9 +24,13 @@ class App extends Component {
             <img src={logo} className="App-logo" alt="logo" />
             <div className="App-intro">
               <h2>Backend Status</h2>
-              {Object.keys(backend).map((key, i) => (
-                  <div key={i}>
-                    <span>{key}: </span><span>{backend[key]}</span>
+              <div key={0} style={{textAlign: "left"}}>
+                <span style={{fontWeight: "bold"}}>status: {backend?.status}</span>
+                <hr/>
+              </div>
+              {Object.keys(backend?.components)?.map((key, i) => (
+                  <div key={i+1} style={{textAlign: "left", display: "table-row"}}>
+                    <div style={{fontWeight: "bold", display: "table-cell"}}>{key}: </div><div style={{textAlign: "right", display: "table-cell"}}>{backend?.components?.[key]?.status}</div>
                   </div>
               ))}
             </div>
