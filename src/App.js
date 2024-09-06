@@ -1,6 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 import {Component} from "react";
+import env from "./env";
+
 
 class App extends Component {
   state = {
@@ -11,7 +13,7 @@ class App extends Component {
   };
 
   async componentDidMount() {
-    const response = await fetch(process.env.REACT_APP_BFF_URL + "/actuator/health");
+    const response = await fetch(env.REACT_APP_BFF_URL + "/actuator/health");
     const body = await response.json();
     this.setState({backend: body});
   }
