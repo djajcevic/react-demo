@@ -13,7 +13,7 @@ class App extends Component {
   };
 
   async componentDidMount() {
-    const response = await fetch(env.REACT_APP_BFF_URL + "/actuator/health");
+    const response = await fetch(process.env.REACT_APP_BFF_URL + "/actuator/health");
     const body = await response.json();
     this.setState({backend: body});
   }
