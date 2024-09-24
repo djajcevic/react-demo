@@ -1,21 +1,29 @@
 import logo from './logo.svg';
 import './App.css';
 import {Component} from "react";
+import { LogLevel } from '@grafana/faro-web-sdk';
+
+// there's a global property
+const faro = window.faro;
 
 class App extends Component {
   state = {
     backend: {
       status: "Not Available",
       components: []
-    }
+    },
+    users: [{
+      id: -1, name: "n/a"
+    }]
   };
 
   async componentDidMount() {
-    await fetch(process.env.REACT_APP_BFF_URL + "/users");
     const response = await fetch(process.env.REACT_APP_BFF_URL + "/actuator/health");
     const body = await response.json();
     this.setState({backend: body});
   }
+
+
 
   render() {
     const {backend} = this.state;
@@ -38,6 +46,20 @@ class App extends Component {
                   ))
               }
             </div>
+            <div>
+              <h2>Users API</h2>
+              {
+                  backend?.users && Object.keys(backend?.users)?.map((key, i) => (
+                      <div key={i+1} style={{textAlign: "left", display: "table-row"}}>
+                        <div style={{fontWeight: "bold", display: "table-cell"}}>{key}:</div>
+                        <div style={{textAlign: "right", display: "table-cell"}}>{backend?.users[key]?.name}</div>
+                      </div>
+                  ))
+              }
+            </div>
+            <button onClick={() => {
+              fetch(process.env.REACT_APP_BFF_URL + "/users");
+            }}>test</button>
           </header>
         </div>
     );
